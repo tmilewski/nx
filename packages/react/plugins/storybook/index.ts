@@ -42,7 +42,8 @@ export const webpack = (
     '=> Loading Nrwl React Webpack configuration "@nrwl/react/plugins/webpack"'
   );
 
-  const tsconfigPath = join(CWD, options.configDir, 'tsconfig.json');
+  // TODO: check whether only in latest storybook version
+  const tsconfigPath = join(options.configDir, 'tsconfig.json');
 
   const builderOptions: any = {
     ...options,
@@ -74,11 +75,29 @@ export const webpack = (
     getStylesPartial(options.configDir, builderOptions, extractCss),
   ]);
 
+  // adjust the SVG rule
+  const svgRuleIndex = storybookWebpackConfig.module.rules.findIndex((rule) => {
+    const { test } = rule;
+
+    return test.toString().startsWith('/\\.(svg|ico');
+  });
+
+  // storybookWebpackConfig.module.rules[
+  //   svgRuleIndex
+  // ].test = /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/;
+
   // run it through the React customizations
   const finalConfig = reactWebpackConfig(baseWebpackConfig);
 
   return {
     ...storybookWebpackConfig,
+    module: {
+      ...storybookWebpackConfig.module,
+      rules: [
+        ...storybookWebpackConfig.module.rules,
+        ...finalConfig.module.rules,
+      ],
+    },
     resolve: {
       ...storybookWebpackConfig.resolve,
       plugins: mergePlugins(
