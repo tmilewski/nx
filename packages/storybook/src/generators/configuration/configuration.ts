@@ -123,7 +123,9 @@ function createProjectStorybookDir(
   const { root, projectType } = readProjectConfiguration(tree, projectName);
   const projectDirectory = projectType === 'application' ? 'app' : 'lib';
 
-  if (tree.exists(join(root, '.storybook'))) {
+  const storybookRoot = join(root, '.storybook');
+
+  if (tree.exists(storybookRoot)) {
     return;
   }
 
@@ -138,7 +140,7 @@ function createProjectStorybookDir(
   generateFiles(tree, templatePath, root, {
     tmpl: '',
     uiFramework,
-    offsetFromRoot: offsetFromRoot(root),
+    offsetFromRoot: offsetFromRoot(storybookRoot),
     projectType: projectDirectory,
     useWebpack5: uiFramework === '@storybook/angular',
   });
