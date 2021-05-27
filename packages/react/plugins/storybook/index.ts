@@ -76,11 +76,11 @@ export const webpack = (
   ]);
 
   // adjust the SVG rule
-  const svgRuleIndex = storybookWebpackConfig.module.rules.findIndex((rule) => {
-    const { test } = rule;
+  // const svgRuleIndex = storybookWebpackConfig.module.rules.findIndex((rule) => {
+  //   const { test } = rule;
 
-    return test.toString().startsWith('/\\.(svg|ico');
-  });
+  //   return test.toString().startsWith('/\\.(svg|ico');
+  // });
 
   // storybookWebpackConfig.module.rules[
   //   svgRuleIndex
