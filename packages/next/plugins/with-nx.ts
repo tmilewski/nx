@@ -80,10 +80,9 @@ export function withNx(
       );
       // Might not be found if Next.js webpack config changes in the future
       if (nextCssLoader) {
-        nextCssLoader.issuer.or = nextCssLoader.issuer.and
-          ? nextCssLoader.issuer.and.concat(includes)
-          : includes;
-        delete nextCssLoader.issuer.and;
+        nextCssLoader.issuer = {
+          or: nextCssLoader.issuer?.and ? nextCssLoader.issuer.and.concat(includes): includes
+        }
       }
 
       /*
@@ -96,10 +95,9 @@ export function withNx(
       );
       // Might not be found if Next.js webpack config changes in the future
       if (nextSassLoader) {
-        nextSassLoader.issuer.or = nextSassLoader.issuer.and
-          ? nextSassLoader.issuer.and.concat(includes)
-          : includes;
-        delete nextSassLoader.issuer.and;
+        nextSassLoader.issuer = {
+          or: nextSassLoader.issuer?.and ? nextSassLoader.issuer.and.concat(includes): includes
+        }
       }
 
       /*
